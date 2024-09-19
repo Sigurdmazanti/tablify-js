@@ -52,6 +52,8 @@
 
         
         const _optsOutputs = {
+            includeColumnClass: opts.includeColumnName === true ? 'include-col' : '',
+            includeRowClass: opts.includeRowName === true ? 'include-row' : '',
             editable: opts.isEditable === true ? 'contenteditable="true"' : '',
             hoverable: opts.isHoverableRow === true ? 'data-hoverable-row' : '',
             container: opts.container instanceof HTMLElement ? opts.container : document.querySelector(opts.container),
@@ -92,6 +94,15 @@
             const columnLookup = {};
         
             const tBody = ['<tbody>'];
+            const leftRowMarkup = [];
+            const topColumnMarkup = [];
+
+            if (opts.includeRowName) {
+                leftRowMarkup.push('<div class="row-numbers">');
+            }
+            if (opts.includeColumnName) {
+                topColumnMarkup.push('<div class="column-names">');
+            }
             
             let currentRow = 0;
         
@@ -124,7 +135,7 @@
                     }
                     tBody.push(`<tr ${_optsOutputs.hoverable}>`);
                     if(opts.includeRowName) {
-                        tBody.push(`<td>${rowNum}</td>`);
+                        leftRowMarkup.push(`<div>${rowNum}</div>`);
                     }
         
                     columns.forEach(col => {
@@ -138,13 +149,39 @@
                     currentRow = rowNum;
                 }
             }
+
+            if (opts.includeColumnName) {
+                for (let i = 0; i < columns.length; i++) {
+                    topColumnMarkup.push(`<div>${columns[i].col}</div>`);
+                }
+                topColumnMarkup.push('</div>');
+            }
+
+            if (opts.includeRowName) {
+                leftRowMarkup.push('</div>');
+            }
             
             
             const tHead = generateTableHead(columns);
+
             if (opts.isExportable) {
                 _optsOutputs.exportBtn().addEventListener('click', () => handleExport(opts.tableId, sheetName));
             }
-            const html = `<table class="tablify-table" ${_optsOutputs.tableId}>${tHead.join('')}${tBody.join('')}</table>`;
+            if (opts.includeColumnName) {
+                container.classList.add(_optsOutputs.includeColumnClass);
+            }
+            if(opts.includeRowName) {
+                container.classList.add(_optsOutputs.includeRowClass);
+            }
+            const html = `
+            ${leftRowMarkup.join('')}
+            ${topColumnMarkup.join('')}
+            <table
+                class="tablify-table"
+                ${_optsOutputs.tableId}>
+                ${tHead.join('')}
+                ${tBody.join('')}
+            </table>`;
             
             _optsOutputs.container.innerHTML = html;
         }
@@ -152,21 +189,7 @@
         function generateTableHead(cols) {
             const tHead = ['<thead>'];
         
-            if (opts.includeColumnName) {
-                tHead.push('<tr>');
-                if(opts.includeRowName) {
-                    tHead.push('<th data-row-name></th>');
-                }
-                for (let i = 0; i < cols.length; i++) {
-                    tHead.push(`<th data-column-name>${cols[i].col}</th>`);
-                }
-                tHead.push('</tr>');
-            }
-        
             tHead.push(`<tr ${_optsOutputs.hoverable}>`);
-            if(opts.includeRowName) {
-                tHead.push('<th>1</th>');
-            }
             for (let i = 0; i < cols.length; i++) {
                 tHead.push(`<th ${_optsOutputs.editable}>${cols[i].val}</th>`);
             }
@@ -178,8 +201,6 @@
         function handleExport(tableId, sheetName) {
             const table = document.getElementById(tableId);
             const workbook = XLSX.utils.table_to_book(table, { sheet: sheetName });
-            console.log(workbook);
-            // JSON // CSV // Sheet // Book
             XLSX.writeFile(workbook, 'exported_table.xlsx');
         }
         /**
