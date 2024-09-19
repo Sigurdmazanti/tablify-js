@@ -1,0 +1,20 @@
+.tablify-table {
+  width: 100%;
+}
+.tablify-table [data-hoverable-row] {
+  position: relative;
+}
+.tablify-table [data-hoverable-row]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  transition: 0.2s ease-in-out background-color;
+  pointer-events: none;
+}
+.tablify-table [data-hoverable-row]:hover::after {
+  background-color: rgba(0, 0, 0, 0.65);
+}/*# sourceMappingURL=tablify.css.map */
