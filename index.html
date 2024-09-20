@@ -9,9 +9,14 @@
 <body>
     <input type="file" id="tablify">
     <!-- <button type="button" id="exportBtn">export</button> -->
-    <div id="container">
-        <!-- -->
-    </div>
+    <!-- <div id="container">
+    </div> -->
+    <div id="container" class="include-col include-row tablify-container">
+        <table class="tablify-table" id="tablify-table">
+            <thead><tr data-hoverable-row=""><th contenteditable="true" data-col="A">Name</th><th contenteditable="true" data-col="B">ID</th><th contenteditable="true" data-col="C">Price</th><th contenteditable="true" data-col="D">Sale price</th><th contenteditable="true" data-col="E">Color</th><th contenteditable="true" data-col="F">Stock</th><th contenteditable="true" data-col="G">SKU</th><th contenteditable="true" data-col="H">Amount</th></tr></thead>
+            <tbody><tr data-hoverable-row=""><td data-value-type="s" contenteditable="true">Bread</td><td data-value-type="n" contenteditable="true">1</td><td data-value-type="n" contenteditable="true">50</td><td data-value-type="n" contenteditable="true">40</td><td data-value-type="s" contenteditable="true">Black</td><td data-value-type="n" contenteditable="true">100</td><td data-value-type="n" contenteditable="true">50</td><td data-value-type="n" contenteditable="true">20</td></tr><tr data-hoverable-row=""><td data-value-type="s" contenteditable="true">Milk</td><td data-value-type="n" contenteditable="true">2</td><td data-value-type="n" contenteditable="true">100</td><td data-value-type="n" contenteditable="true">60</td><td data-value-type="s" contenteditable="true">Red</td><td data-value-type="n" contenteditable="true">1000</td><td data-value-type="n" contenteditable="true">500</td><td data-value-type="n" contenteditable="true">200</td></tr><tr data-hoverable-row=""><td data-value-type="s" contenteditable="true">Coffee</td><td data-value-type="n" contenteditable="true">3</td><td data-value-type="n" contenteditable="true">25</td><td data-value-type="n" contenteditable="true">20</td><td data-value-type="s" contenteditable="true">Yellow</td><td data-value-type="n" contenteditable="true">5000</td><td data-value-type="n" contenteditable="true">2000</td><td data-value-type="n" contenteditable="true">105</td></tr><tr data-hoverable-row=""><td data-value-type="s" contenteditable="true">Chicken</td><td data-value-type="n" contenteditable="true">4</td><td data-value-type="n" contenteditable="true">25000</td><td data-value-type="n" contenteditable="true">2000</td><td data-value-type="s" contenteditable="true">White</td><td data-value-type="n" contenteditable="true">150</td><td data-value-type="n" contenteditable="true">10</td><td data-value-type="n" contenteditable="true">5</td></tr><tr data-hoverable-row=""><td data-value-type="s" contenteditable="true">Test</td><td data-value-type="" contenteditable="true"></td><td data-value-type="" contenteditable="true"></td><td data-value-type="" contenteditable="true"></td><td data-value-type="" contenteditable="true"></td><td data-value-type="" contenteditable="true"></td><td data-value-type="n" contenteditable="true">100</td><td data-value-type="" contenteditable="true"></td>
+        </tr></tbody></table></div>
+
     <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
     <script src="tablify.js"></script>
 </body>

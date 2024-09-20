@@ -37,7 +37,7 @@
         input.addEventListener('change', handleUpload);
         
         const _defaultOpts = {
-            container: '', // CSS selector or HTML element
+            container: '', // CSS selector or HTML element. required
             tableId: 'tablify-table',
             includeColumnName: true, // displays column names/numbers
             includeRowName: true, // displays row names/numbers
@@ -98,10 +98,10 @@
             const topColumnMarkup = [];
 
             if (opts.includeRowName) {
-                leftRowMarkup.push('<div class="row-numbers">');
+                leftRowMarkup.push('<div class="row-numbers"><div class="row-number-container">');
             }
             if (opts.includeColumnName) {
-                topColumnMarkup.push('<div class="column-names">');
+                topColumnMarkup.push('<div class="column-names"><div class="column-name-container">');
             }
             
             let currentRow = 0;
@@ -154,16 +154,17 @@
                 for (let i = 0; i < columns.length; i++) {
                     topColumnMarkup.push(`<div>${columns[i].col}</div>`);
                 }
-                topColumnMarkup.push('</div>');
+                topColumnMarkup.push('</div></div>');
             }
 
             if (opts.includeRowName) {
-                leftRowMarkup.push('</div>');
+                leftRowMarkup.push('</div></div>');
             }
             
             
             const tHead = generateTableHead(columns);
-
+            const container = _optsOutputs.container;
+            container.classList.add('tablify-container');
             if (opts.isExportable) {
                 _optsOutputs.exportBtn().addEventListener('click', () => handleExport(opts.tableId, sheetName));
             }
@@ -173,9 +174,11 @@
             if(opts.includeRowName) {
                 container.classList.add(_optsOutputs.includeRowClass);
             }
+
+            // ${leftRowMarkup.join('')}
+            // ${topColumnMarkup.join('')}
+
             const html = `
-            ${leftRowMarkup.join('')}
-            ${topColumnMarkup.join('')}
             <table
                 class="tablify-table"
                 ${_optsOutputs.tableId}>
@@ -183,7 +186,7 @@
                 ${tBody.join('')}
             </table>`;
             
-            _optsOutputs.container.innerHTML = html;
+            container.innerHTML = html;
         }
 
         function generateTableHead(cols) {
@@ -191,7 +194,7 @@
         
             tHead.push(`<tr ${_optsOutputs.hoverable}>`);
             for (let i = 0; i < cols.length; i++) {
-                tHead.push(`<th ${_optsOutputs.editable}>${cols[i].val}</th>`);
+                tHead.push(`<th ${_optsOutputs.editable} data-col="${cols[i].col}">${cols[i].val}</th>`);
             }
             tHead.push('</tr></thead>');
         

@@ -1,5 +1,57 @@
+.tablify-container.include-col.include-row {
+  display: grid;
+  grid-template-columns: max-content auto;
+  grid-template-rows: 1fr 1fr;
+}
+.tablify-container.include-col.include-row .column-names {
+  grid-column: 2;
+  grid-row: 1;
+  display: table;
+  border-collapse: separate;
+  box-sizing: border-box;
+  text-indent: initial;
+  unicode-bidi: isolate;
+  border-spacing: 2px;
+  border-color: gray;
+}
+.tablify-container.include-col.include-row .column-names .column-name-container {
+  display: table-row;
+  vertical-align: inherit;
+  unicode-bidi: isolate;
+  border-color: inherit;
+}
+.tablify-container.include-col.include-row .column-names .column-name-container div {
+  display: table-cell;
+  vertical-align: inherit;
+  font-weight: bold;
+  text-align: -internal-center;
+  unicode-bidi: isolate;
+}
+.tablify-container.include-col.include-row .row-numbers {
+  grid-row: span 2;
+  grid-column: 1;
+}
+.tablify-container.include-col.include-row .tablify-table {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.tablify-container thead th {
+  position: relative;
+}
+.tablify-container thead th::before {
+  content: attr(data-col);
+  display: block;
+  position: absolute;
+  top: 0;
+}
+
 .tablify-table {
   width: 100%;
+}
+.tablify-table th {
+  text-align: left;
+  position: relative;
 }
 .tablify-table [data-hoverable-row] {
   position: relative;
