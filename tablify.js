@@ -17,6 +17,10 @@
 // 2. Generate a table layout quickly
 // 3. Display table with fetched data from REST API/local file/server file etc.
 
+// TODO:
+// Find a better way to organize data, if header is missing. sorting first is inefficient.
+
+
 // 'application/vnd.openxmlformats-officedocument.spreadsheetml.template' // .xltx
 // 'application/vnd.ms-excel.template.macroenabled.12', // .xltm
 // 'application/vnd.oasis.opendocument.spreadsheet', // .ods
@@ -109,8 +113,20 @@
             }
             
             let currentRow = 0;
+            const keys = Object.keys(sheet).sort((a, b) => {
+                const colA = extractCharacters(a);
+                const colB = extractCharacters(b);
+                
+                if (colA < colB) return -1;
+                if (colA > colB) return 1;
         
-            for (const key of Object.keys(sheet)) {
+                const rowA = parseInt(extractNumber(a), 10);
+                const rowB = parseInt(extractNumber(b), 10);
+                return rowA - rowB;
+            });
+            
+        
+            for (const key of keys) {
                 const cell = sheet[key];
         
                 if(key === '!ref' || key === '!margins') {
@@ -194,6 +210,7 @@
         }
 
         function generateTableHead(cols, length) {
+            
             const tHead = ['<thead>'];
             tHead.push(`<tr ${_optsOutputs.hoverable}>`);
 

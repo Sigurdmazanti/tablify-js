@@ -62,7 +62,6 @@ $colRowBorder: #D6D6D6;
 
 .tablify-container {
     font-size: 16px;
-    font: 'Times New Roman';
 
     .tablify-table {
         width: 100%;
@@ -78,13 +77,13 @@ $colRowBorder: #D6D6D6;
                 font-weight: normal;
                 border-bottom: 1px solid $colRowBorder;
                 border-right: 1px solid $colRowBorder;
-                border-top: 1px solid $colRowBorder;
-                border-left: 1px solid $colRowBorder;
 
                 &::before {
                     height: 100%;
-                    border-left: 2px solid $colNameRowNameBg;
-                    margin-top: -0.5px;
+                    width: calc(100% + 1px);
+                    border-bottom: 1px solid $colRowBorder;
+                    padding-left: 0;
+                    padding-right: 0;
                 }
             }
 
@@ -119,7 +118,7 @@ $colRowBorder: #D6D6D6;
                     background-color: $colNameRowNameBg;
                     border-bottom: 1px solid $colRowBorder;
                     border-right: 1px solid $colRowBorder;
-                    border-left: 1px solid $colRowBorder;
+                    // border-left: 1px solid $colRowBorder;
                 }
             }
         }
