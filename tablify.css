@@ -1,62 +1,105 @@
-.tablify-container.include-col.include-row {
-  display: grid;
-  grid-template-columns: max-content auto;
-  grid-template-rows: 1fr 1fr;
+/* FOR DEMO PURPOSES */
+.tablify-container {
+  margin-top: 50px;
+  margin: 50px 30px;
 }
-.tablify-container.include-col.include-row .column-names {
-  grid-column: 2;
-  grid-row: 1;
-  display: table;
-  border-collapse: separate;
+
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
-  text-indent: initial;
-  unicode-bidi: isolate;
-  border-spacing: 2px;
-  border-color: gray;
-}
-.tablify-container.include-col.include-row .column-names .column-name-container {
-  display: table-row;
-  vertical-align: inherit;
-  unicode-bidi: isolate;
-  border-color: inherit;
-}
-.tablify-container.include-col.include-row .column-names .column-name-container div {
-  display: table-cell;
-  vertical-align: inherit;
-  font-weight: bold;
-  text-align: -internal-center;
-  unicode-bidi: isolate;
-}
-.tablify-container.include-col.include-row .row-numbers {
-  grid-row: span 2;
-  grid-column: 1;
-}
-.tablify-container.include-col.include-row .tablify-table {
-  grid-row: 2;
-  grid-column: 2;
 }
 
-.tablify-container thead th {
-  position: relative;
+/* END */
+.tablify-container {
+  font-size: 16px;
+  font: "Times New Roman";
 }
-.tablify-container thead th::before {
-  content: attr(data-col);
-  display: block;
-  position: absolute;
-  top: 0;
-}
-
-.tablify-table {
+.tablify-container .tablify-table {
   width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
-.tablify-table th {
+.tablify-container .tablify-table thead th.row-col-span {
+  border: 0;
+  background-color: #F0F0F0;
+  width: -moz-fit-content;
+  width: fit-content;
+  text-align: center;
+  font-weight: normal;
+  border-bottom: 1px solid #D6D6D6;
+  border-right: 1px solid #D6D6D6;
+  border-top: 1px solid #D6D6D6;
+  border-left: 1px solid #D6D6D6;
+}
+.tablify-container .tablify-table thead th.row-col-span::before {
+  height: 100%;
+  border-left: 2px solid #F0F0F0;
+  margin-top: -0.5px;
+}
+.tablify-container .tablify-table thead th {
+  position: relative;
   text-align: left;
   position: relative;
 }
-.tablify-table [data-hoverable-row] {
+.tablify-container .tablify-table thead th::before {
+  content: attr(data-col);
+  display: block;
+  position: absolute;
+  top: -1.6em;
+  background-color: #F0F0F0;
+  width: 100%;
+  padding: 0.2em;
+  text-align: center;
+  pointer-events: none;
+}
+.tablify-container .tablify-table tbody tr {
   position: relative;
 }
-.tablify-table [data-hoverable-row]::after {
+.tablify-container .tablify-table tbody tr::before {
+  content: attr(data-row-name);
+  display: table-cell;
+  text-align: center;
+  width: calc(100% - 2px);
+  background-color: #F0F0F0;
+  border-bottom: 1px solid #D6D6D6;
+  border-right: 1px solid #D6D6D6;
+  border-left: 1px solid #D6D6D6;
+}
+.tablify-container .tablify-table [data-digits][data-digits="1"] {
+  width: 30px;
+}
+.tablify-container .tablify-table [data-digits][data-digits="2"] {
+  width: 38px;
+}
+.tablify-container .tablify-table [data-digits][data-digits="3"] {
+  width: 46px;
+}
+.tablify-container .tablify-table [data-digits][data-digits="4"] {
+  width: 54px;
+}
+.tablify-container .tablify-table [data-digits][data-digits="5"] {
+  width: 62px;
+}
+.tablify-container .tablify-table [data-digits][data-digits="6"] {
+  width: 70px;
+}
+.tablify-container .tablify-table [data-digits][data-digits="7"] {
+  width: 78px;
+}
+.tablify-container .tablify-table [data-digits][data-digits="8"] {
+  width: 86px;
+}
+.tablify-container .tablify-table [data-digits][data-digits="9"] {
+  width: 94px;
+}
+.tablify-container .tablify-table [data-digits][data-digits="10"] {
+  width: 102px;
+}
+.tablify-container .tablify-table [data-hoverable-row] {
+  position: relative;
+}
+.tablify-container .tablify-table [data-hoverable-row]::after {
   content: "";
   position: absolute;
   top: 0;
@@ -67,6 +110,6 @@
   transition: 0.2s ease-in-out background-color;
   pointer-events: none;
 }
-.tablify-table [data-hoverable-row]:hover::after {
+.tablify-container .tablify-table [data-hoverable-row]:hover::after {
   background-color: rgba(0, 0, 0, 0.65);
 }/*# sourceMappingURL=tablify.css.map */

@@ -58,6 +58,10 @@
             hoverable: opts.isHoverableRow === true ? 'data-hoverable-row' : '',
             container: opts.container instanceof HTMLElement ? opts.container : document.querySelector(opts.container),
             tableId: `id="${opts.tableId}"`,
+            row: (i = false) => {
+                if(i===false) return '';
+                return opts.includeRowName ? `data-row-name="${i}"` : '';
+            },
             cell: (cell) => {
                 if(!opts.includeCellData) { return '' }
                 return `data-cell="${cell}"`
@@ -133,7 +137,7 @@
                     if(currentRow !== 0) {
                         tBody.push('</tr>');
                     }
-                    tBody.push(`<tr ${_optsOutputs.hoverable}>`);
+                    tBody.push(`<tr ${_optsOutputs.hoverable} ${_optsOutputs.row(rowNum)}>`);
                     if(opts.includeRowName) {
                         leftRowMarkup.push(`<div>${rowNum}</div>`);
                     }
@@ -149,7 +153,7 @@
                     currentRow = rowNum;
                 }
             }
-
+            
             if (opts.includeColumnName) {
                 for (let i = 0; i < columns.length; i++) {
                     topColumnMarkup.push(`<div>${columns[i].col}</div>`);
@@ -162,7 +166,7 @@
             }
             
             
-            const tHead = generateTableHead(columns);
+            const tHead = generateTableHead(columns, Object.keys(sheet).length);
             const container = _optsOutputs.container;
             container.classList.add('tablify-container');
             if (opts.isExportable) {
@@ -189,10 +193,15 @@
             container.innerHTML = html;
         }
 
-        function generateTableHead(cols) {
+        function generateTableHead(cols, length) {
             const tHead = ['<thead>'];
-        
             tHead.push(`<tr ${_optsOutputs.hoverable}>`);
+
+            if(opts.includeRowName) {
+                const digits = getDigitsAmount(length);
+                tHead.push(`<th class="row-col-span" data-digits="${digits}">1</th>`);
+            }
+
             for (let i = 0; i < cols.length; i++) {
                 tHead.push(`<th ${_optsOutputs.editable} data-col="${cols[i].col}">${cols[i].val}</th>`);
             }
@@ -240,6 +249,23 @@
     function extractNumber(string) {
         return string.match(/\d+/);
     }
+
+    /**
+     * Calculates the number of digits in a given number.
+     *
+     * @param {number} num - The input number for which the digit count will be calculated.
+     * @returns {number} The number of digits in the input number.
+     *
+     * @example
+     * getDigitsAmount(12345); // 5
+     * getDigitsAmount(0);     // 1
+     * getDigitsAmount(-987);  // 3
+     */
+    function getDigitsAmount(num) {
+        if (num === 0) return 1; // Special case for zero
+        return Math.floor(Math.log10(Math.abs(num))) + 1;
+    }
+
 
     function displayMessage(message) {
 
